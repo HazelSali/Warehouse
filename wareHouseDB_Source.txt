@@ -1,0 +1,61 @@
+drop database if exists warehouse;
+create database warehouse;
+use warehouse;
+
+create table lots (
+id int auto_increment primary key not null,
+size double null default null,
+loadability double null default null
+);
+
+create table goods(
+id int auto_increment primary key not null,
+name varchar (255) not null,
+weight double not null,
+size double not null,
+price double not null
+);
+
+create table transactions(
+id int auto_increment primary key not null,
+dateOfTransaction datetime not null default 0,
+good_id int not null,
+quantity int not null,
+#1 - importation
+#2- export
+typeOfTransaction enum ('Inport', 'Export'),
+constraint foreign key (good_id) references goods(id)
+);
+
+create table availability (
+id int auto_increment primary key not null,
+numOfGoods int not null,
+good_id int not null,
+lot_id int not null,
+constraint foreign key (good_id) references goods(id),
+constraint foreign key (lot_id) references lots(id)
+);
+
+insert into lots values
+(NULL,10, 10),
+(NULL,20,20),
+(NULL,30,30),
+(NULL,40,40),
+(NULL,50,50),
+(NULL,60,60),
+(NULL,70,70),
+(NULL,80,80),
+(NULL,90,90),
+(NULL,100,100);
+
+insert into goods values
+(NULL,'banana',9,9,5),
+(NULL,'orange',20,20,5),
+(NULL,'PC',39,39,5),
+(NULL,'food',29,29,5),
+(NULL,'shoes',99,99,5),
+(NULL,'phone boxes', 89,89,5),
+(NULL,'glasses',79,79,5),
+(NULL,'private think',69,69,5),
+(NULL,'toys',59,59,5),
+(NULL,'bags',49,49,5);
